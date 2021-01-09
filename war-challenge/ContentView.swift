@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var playerCard = "card2"
+    @State var cpuCard = "card3"
+    @State var playerPoints = 0
+    @State var cpuPoints = 0
+    
     var body: some View {
         ZStack {
             Image("background").edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
@@ -19,13 +24,30 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Image("card3")
+                    Image(playerCard)
                     Spacer()
-                    Image("card4")
+                    Image(cpuCard)
                     Spacer()
                 }
                 Spacer()
-                Image("dealbutton")
+                Button(action: {
+                    let playerRandomNr = Int.random(in: 2...14)
+                    let cpuRandomNr = Int.random(in:2...14)
+                    let card = "card"
+                    playerCard = card + String(playerRandomNr)
+                    cpuCard = card + String(cpuRandomNr)
+                    
+                    if(playerRandomNr > cpuRandomNr) {
+                        playerPoints += 1
+                    } else if (playerRandomNr < cpuRandomNr) {
+                        cpuPoints += 1
+                    } else {
+                      playerPoints+=1
+                        cpuPoints+=1
+                    }
+                }, label: {
+                    Image("dealbutton")
+                })
                 Spacer()
                 HStack {
                     Spacer()
@@ -33,13 +55,13 @@ struct ContentView: View {
                         Text("Player")
                             .fontWeight(.semibold)
                             .padding()
-                        Text("0")
+                        Text(String(playerPoints))
                             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     }
                     Spacer()
                     VStack {
                         Text("CPU").fontWeight(.semibold).padding()
-                        Text("0")
+                        Text(String(cpuPoints))
                             .font(.title)
                     }
                     Spacer()
